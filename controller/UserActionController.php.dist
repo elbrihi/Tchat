@@ -1,0 +1,59 @@
+<?php
+include '../app/classLoad.php';
+
+
+class UserActionController extends Controller
+{
+   
+    public function __construct($source)
+    {
+    
+        //
+        $this->_source = $source;
+        //$this->user = new User();
+        $this->_userManager = new UserManager(PDOFactory::getMysqlConnection());
+        
+    }
+
+    public function login($user)
+    {
+        
+        $login = htmlspecialchars($user['user_email']);
+        $password = htmlspecialchars($user['user_password']);
+
+        $pass = $this->_userManager->getPasswordByEmail($login);
+        
+        if ( password_verify($password, $pass->getPassword()) )
+        {
+            $_SESSION['user'] =  $this->_userManager->getUserByLogin($login);
+
+            
+            $this->_source = "view/dashboard.php";  
+
+            return $this->_userManager->getUserByLogin($login);
+        }
+        else
+        {
+            $this->_actionMessage = "Opération Invalide : Mot de passe incorrecte.";
+            $this->_typeMessage = "error";
+            $this->_source = "index";
+        }
+        
+    }
+    public function actionMessage()
+    {
+        return $this->_actionMessage ;
+    }
+    public function typeMessage()
+    {
+        return $this->_typeMessage ;
+    } 
+    public function source()
+    {
+        
+        
+        return $this->_source;
+    }
+
+}
+

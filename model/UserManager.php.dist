@@ -1,0 +1,50 @@
+<?php
+
+include '../app/classLoad.php';
+
+class UserManager
+{
+    private $_db;
+    
+    public function __construct($_db)
+    {
+        $this->_db = $_db;
+    }
+
+    public function login($data)
+    {
+        return $data;
+    }
+    public function exist2()
+    {
+
+    }
+    public function getPasswordByEmail($login)
+    {
+
+        $query = $this->_db->prepare(' SELECT user_password FROM user where user_email = "sino@sino.sino" ');
+		//or die (print_r($this->_db->errorInfo()));
+		$query->bindValue(':user_password', $login);
+		
+        $query->execute();
+        $data = $query->fetch(PDO::FETCH_ASSOC);
+        $user = new User($data);
+        $query->closeCursor();
+       
+        return $user ; 
+    }
+    public function getUserByLogin($login)
+    {
+        $query = $this->_db->prepare(' SELECT * FROM user where user_email = "sino@sino.sino" ');
+		//or die (print_r($this->_db->errorInfo()));
+		$query->bindValue(':user_password', $login);
+		
+        $query->execute();
+        return $query->fetchAll();
+       
+    }
+}
+
+
+
+?>

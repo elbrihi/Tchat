@@ -33,36 +33,7 @@ class UserActionController {
     //actions
   
 
-    public function update($user){
-        if ( !empty($user['idUser']) && !empty($user['login']) ) {
-            $idUser = htmlentities($_POST['idUser']);
-			$login = htmlentities($user['login']);
-			$password = htmlentities($user['password']);
-            $password = password_hash($password, PASSWORD_DEFAULT);
-			$profil = htmlentities($user['profil']);
-			$status = htmlentities($user['status']);
-			$updatedBy = $_SESSION['userAxaAmazigh']->login();
-            $updated = date('Y-m-d h:i:s');
-            $user = new User(array(
-				'id' => $idUser,
-				'login' => $login,
-				'password' => $password,
-				'profil' => $profil,
-				'status' => $status,
-				'updated' => $updated,
-            	'updatedBy' => $updatedBy
-			));
-            $this->_userManager->update($user);
-            $this->_actionMessage = "Opération Valide : User Modifié(e) avec succès.";
-            $this->_typeMessage = "success";
-            $this->_source = "view/user";
-        }
-        else{
-            $this->_actionMessage = "Opération Invalide : Vous devez remplir le champ 'login'.";
-            $this->_typeMessage = "error";
-            $this->_source = "view/user";
-        }
-    }
+
     
     public function updateProfil($user){
         if ( !empty($user['idUser']) && !empty($user['profil']) ) {

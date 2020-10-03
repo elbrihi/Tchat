@@ -36,9 +36,7 @@ ini_set('display_errors', 1);
 						<div class="form-group">
 							<input type="submit" name="buttom" value="Login" class="btn btn-info" />
 						</div>
-						<div class="form-group">
-							<a href="inscription.php">Inscrire</a>
-						</div>
+						
                         <input type="hidden" name="action" value="login" />
                         <input type="hidden" name="source" value="user" />
 					</form>
